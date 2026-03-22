@@ -1,41 +1,45 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Models;
 
 class Message
 {
-    public function __construct(
-        private int $id,
-        private int $salonId,
-        private string $content,
-        private bool $isPinned,
-        private string $createdAt
-    ) {
+    private $id;
+    private $salonId;
+    private $content;
+    private $isPinned;
+    private $createdAt;
+
+    public function __construct($id, $salonId, $content, $isPinned, $createdAt)
+    {
+        $this->id = $id;
+        $this->salonId = $salonId;
+        $this->content = $content;
+        $this->isPinned = $isPinned;
+        $this->createdAt = $createdAt;
     }
 
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
 
-    public function getSalonId(): int
+    public function getSalonId()
     {
         return $this->salonId;
     }
 
-    public function getContent(): string
+    public function getContent()
     {
         return $this->content;
     }
 
-    public function isPinned(): bool
+    public function isPinned()
     {
         return $this->isPinned;
     }
 
-    public function getCreatedAt(): string
+    public function getCreatedAt()
     {
         return $this->createdAt;
     }

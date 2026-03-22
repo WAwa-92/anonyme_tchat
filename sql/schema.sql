@@ -3,7 +3,7 @@ USE anonyme_tchat;
 
 CREATE TABLE IF NOT EXISTS salons (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
+    name VARCHAR(100) NOT NULL UNIQUE,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -13,5 +13,7 @@ CREATE TABLE IF NOT EXISTS messages (
     content TEXT NOT NULL,
     is_pinned TINYINT(1) NOT NULL DEFAULT 0,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_messages_salon_created_at (salon_id, created_at),
+    INDEX idx_messages_salon_pinned (salon_id, is_pinned),
     CONSTRAINT fk_messages_salon FOREIGN KEY (salon_id) REFERENCES salons(id) ON DELETE CASCADE
 );

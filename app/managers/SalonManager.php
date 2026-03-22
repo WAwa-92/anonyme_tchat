@@ -44,4 +44,18 @@ class SalonManager
 
         return (int) $pdo->lastInsertId();
     }
+
+    public function findByName(string $name): ?Salon
+    {
+        $pdo = Database::getConnection();
+        $stmt = $pdo->prepare('SELECT id, name, created_at FROM salons WHERE name = :name LIMIT 1');
+        $stmt->execute(['name' => $name]);
+        $row = $stmt->fetch();
+
+        if (!$row) {
+            return null;
+        }
+
+        return new Salon((int) $row['id'], $row['name'], $row['created_at']);
+    }
 }

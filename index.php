@@ -1,10 +1,10 @@
 <?php
 
-declare(strict_types=1);
-
 use App\Services\Router;
 
-spl_autoload_register(function (string $class): void {
+session_start();
+
+spl_autoload_register(function ($class) {
     $prefix = 'App\\';
     $baseDir = __DIR__ . '/app/';
 
@@ -23,4 +23,4 @@ spl_autoload_register(function (string $class): void {
 require_once __DIR__ . '/config/settings.php';
 
 $router = new Router(ROUTES);
-$router->dispatch();
+$router->run();

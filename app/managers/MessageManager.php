@@ -6,6 +6,7 @@ namespace App\Managers;
 
 use App\Models\Message;
 use App\Services\Database;
+use Throwable;
 
 class MessageManager
 {
@@ -43,13 +44,37 @@ class MessageManager
     {
         $pdo = Database::getConnection();
 
-        $resetStmt = $pdo->prepare('UPDATE messages SET is_pinned = 0 WHERE salon_id = :salon_id');
-        $resetStmt->execute(['salon_id' => $salonId]);
+        try {
+            $pdo->beginTransaction();
 
-        $pinStmt = $pdo->prepare('UPDATE messages SET is_pinned = 1 WHERE id = :id AND salon_id = :salon_id');
-        $pinStmt->execute([
+            $resetStmt = $pdo->prepare('UPDATE messages SET is_pinned = 0 WHERE salon_id = :salon_id');
+            $resetStmt->execute(['salon_id' => $salonId]);
+
+            $pinStmt = $pdo->prepare('UPDATE messages SET is_pinned = 1 WHERE id = :id AND salon_id = :salon_id');
+            $pinStmt->execute([
+                'id' => $messageId,
+                'salon_id' => $salonId,
+            ]);
+
+            $pdo->commit();
+        } catch (Throwable $exception) {
+            if ($pdo->inTransaction()) {
+                $pdo->rollBack();
+            }
+
+            throw $exception;
+        }
+    }
+
+    public function existsInSalon(int $messageId, int $salonId): bool
+    {
+        $pdo = Database::getConnection();
+        $stmt = $pdo->prepare('SELECT id FROM messages WHERE id = :id AND salon_id = :salon_id LIMIT 1');
+        $stmt->execute([
             'id' => $messageId,
             'salon_id' => $salonId,
         ]);
+
+        return (bool) $stmt->fetch();
     }
 }

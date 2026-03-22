@@ -1,16 +1,14 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Services;
 
 use PDO;
 
 class Database
 {
-    private static ?PDO $pdo = null;
+    private static $pdo = null;
 
-    public static function getConnection(): PDO
+    public static function getConnection()
     {
         if (self::$pdo === null) {
             $dsn = 'mysql:host=' . DB_HOST . ';port=' . DB_PORT . ';dbname=' . DB_NAME . ';charset=' . DB_CHARSET;

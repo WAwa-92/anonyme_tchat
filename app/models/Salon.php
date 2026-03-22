@@ -1,29 +1,31 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Models;
 
 class Salon
 {
-    public function __construct(
-        private int $id,
-        private string $name,
-        private string $createdAt
-    ) {
+    private $id;
+    private $name;
+    private $createdAt;
+
+    public function __construct($id, $name, $createdAt)
+    {
+        $this->id = $id;
+        $this->name = $name;
+        $this->createdAt = $createdAt;
     }
 
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
 
-    public function getName(): string
+    public function getName()
     {
         return $this->name;
     }
 
-    public function getCreatedAt(): string
+    public function getCreatedAt()
     {
         return $this->createdAt;
     }

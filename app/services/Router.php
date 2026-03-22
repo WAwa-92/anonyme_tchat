@@ -1,19 +1,17 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Services;
 
 class Router
 {
-    private array $routes;
+    private $routes;
 
-    public function __construct(array $routes)
+    public function __construct($routes)
     {
         $this->routes = $routes;
     }
 
-    public function dispatch(): void
+    public function run()
     {
         $routeName = $_GET['route'] ?? 'home';
 

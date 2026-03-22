@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Controllers;
 
 use App\Managers\MessageManager;
@@ -9,8 +7,8 @@ use App\Managers\SalonManager;
 
 class ChatController
 {
-    private SalonManager $salonManager;
-    private MessageManager $messageManager;
+    private $salonManager;
+    private $messageManager;
 
     public function __construct()
     {
@@ -18,7 +16,7 @@ class ChatController
         $this->messageManager = new MessageManager();
     }
 
-    public function home(): void
+    public function home()
     {
         $salons = $this->salonManager->findAll();
 
@@ -43,7 +41,7 @@ class ChatController
         ]);
     }
 
-    public function salon(): void
+    public function salon()
     {
         $salonId = isset($_GET['id']) ? (int) $_GET['id'] : 0;
         $salons = $this->salonManager->findAll();
@@ -64,21 +62,19 @@ class ChatController
         ]);
     }
 
-    public function createSalon(): void
+    public function createSalon()
     {
         $name = trim((string) ($_POST['name'] ?? ''));
 
         if ($name !== '') {
             $newId = $this->salonManager->create($name);
-            header('Location: index.php?route=salon&id=' . $newId);
-            exit;
+            $this->redirect('salon', ['id' => $newId]);
         }
 
-        header('Location: index.php?route=home');
-        exit;
+        $this->redirect('home');
     }
 
-    public function sendMessage(): void
+    public function sendMessage()
     {
         $salonId = (int) ($_POST['salon_id'] ?? 0);
         $content = trim((string) ($_POST['content'] ?? ''));
@@ -87,11 +83,10 @@ class ChatController
             $this->messageManager->create($salonId, $content);
         }
 
-        header('Location: index.php?route=salon&id=' . $salonId);
-        exit;
+        $this->redirect('salon', ['id' => $salonId]);
     }
 
-    public function pinMessage(): void
+    public function pinMessage()
     {
         $salonId = (int) ($_POST['salon_id'] ?? 0);
         $messageId = (int) ($_POST['message_id'] ?? 0);
@@ -100,25 +95,28 @@ class ChatController
             $this->messageManager->pinOne($salonId, $messageId);
         }
 
-        header('Location: index.php?route=salon&id=' . $salonId);
-        exit;
+        $this->redirect('salon', ['id' => $salonId]);
     }
 
-    public function about(): void
+    public function about()
     {
         $this->render('about/index', [
             'pageTitle' => 'À propos',
         ]);
     }
 
-    private function render(string $view, array $data): void
+    private function render($view, $data)
     {
         extract($data);
-
-        ob_start();
-        include __DIR__ . '/../views/' . $view . '.phtml';
-        $content = ob_get_clean();
-
+        $title = $pageTitle ?? 'Tchat anonyme';
+        $template = __DIR__ . '/../views/' . $view . '.phtml';
         include __DIR__ . '/../views/layout.phtml';
+    }
+
+    private function redirect($route, $params = [])
+    {
+        $query = http_build_query(array_merge(['route' => $route], $params));
+        header('Location: index.php?' . $query);
+        exit;
     }
 }
