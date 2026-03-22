@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace Services;
 
 class Router
 {
@@ -22,9 +22,9 @@ class Router
         }
 
         $controllerClass = $this->routes[$routeName]['controller'];
-        $action = $this->routes[$routeName]['action'];
+        $method = $this->routes[$routeName]['method'];
 
         $controller = new $controllerClass();
-        $controller->$action();
+        $controller->$method();
     }
 }
