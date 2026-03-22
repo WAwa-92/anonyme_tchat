@@ -1,124 +1,238 @@
 body {
-	margin: 0;
-	font-family: Arial, sans-serif;
-	background: #f4f6fb;
-	color: #1f2937;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #36393f;
+    color: #dcddde;
 }
 
+/* ===== Barre de navigation en haut ===== */
 .topbar {
-	display: flex;
-	gap: 20px;
-	background: #111827;
-	padding: 14px 18px;
+    background-color: #202225;
+    padding: 12px 20px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
 }
 
 .topbar a {
-	color: #fff;
-	text-decoration: none;
+    color: #b9bbbe;
+    text-decoration: none;
+    font-weight: bold;
 }
 
+.topbar a:hover {
+    color: #fff;
+}
+
+/* ===== Messages flash ===== */
 .flash {
-	margin: 14px 18px;
-	padding: 10px 12px;
-	border-radius: 8px;
+    padding: 10px 16px;
+    font-size: 14px;
 }
 
 .flash-success {
-	background: #dcfce7;
-	color: #166534;
+    background-color: #2d6a4f;
+    color: #d8f3dc;
 }
 
 .flash-error {
-	background: #fee2e2;
-	color: #991b1b;
+    background-color: #6b2d2d;
+    color: #ffd6d6;
 }
 
+/* ===== Mise en page principale ===== */
 .chat-layout {
-	display: grid;
-	grid-template-columns: 280px 1fr;
-	min-height: calc(100vh - 52px);
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    min-height: calc(100vh - 50px);
 }
 
+/* ===== Sidebar (liste des salons) ===== */
 .sidebar {
-	background: #1f2937;
-	color: #fff;
-	padding: 16px;
+    background-color: #2f3136;
+    padding: 16px;
 }
 
 .sidebar h2 {
-	margin-top: 0;
+    font-size: 14px;
+    color: #8e9297;
+    margin-bottom: 10px;
 }
 
 .sidebar ul {
-	list-style: none;
-	padding: 0;
+    list-style: none;
 }
 
 .sidebar li {
-	padding: 8px;
-	border-radius: 6px;
+    margin-bottom: 2px;
 }
 
-.sidebar li.active {
-	background: #374151;
+.sidebar li a {
+    display: block;
+    padding: 8px 10px;
+    color: #8e9297;
+    text-decoration: none;
+    border-radius: 4px;
 }
 
-.sidebar a {
-	color: #fff;
-	text-decoration: none;
+.sidebar li a:hover {
+    background-color: #36393f;
+    color: #dcddde;
 }
 
+.sidebar li.active a {
+    background-color: #40444b;
+    color: #fff;
+}
+
+/* ===== Formulaire pour creer un salon ===== */
 .new-salon-form {
-	display: flex;
-	gap: 8px;
-	margin-bottom: 12px;
+    display: flex;
+    gap: 6px;
+    margin-bottom: 16px;
 }
 
 .new-salon-form input {
-	flex: 1;
+    flex: 1;
+    padding: 6px 8px;
+    background-color: #40444b;
+    border: none;
+    border-radius: 4px;
+    color: #dcddde;
+    font-size: 13px;
 }
 
+.new-salon-form button {
+    padding: 6px 10px;
+    background-color: #5865f2;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.new-salon-form button:hover {
+    background-color: #4752c4;
+}
+
+/* ===== Zone des messages ===== */
 .messages-zone {
-	padding: 20px;
+    padding: 20px;
 }
 
+.messages-zone h1 {
+    font-size: 20px;
+    color: #fff;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #40444b;
+}
+
+/* ===== Liste des messages ===== */
 .messages-list {
-	display: flex;
-	flex-direction: column;
-	gap: 12px;
-	max-height: 60vh;
-	overflow: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 16px;
 }
 
 .message {
-	background: #fff;
-	border-radius: 8px;
-	padding: 12px;
-	border: 1px solid #e5e7eb;
+    background-color: #40444b;
+    border-radius: 6px;
+    padding: 10px 14px;
+}
+
+.message p {
+    margin-bottom: 6px;
+    line-height: 1.5;
 }
 
 .message.pinned {
-	border: 2px solid #f59e0b;
+    border-left: 4px solid #faa61a;
+    background-color: #3c3a2e;
 }
 
+/* ===== Infos sous le message (date + epingler) ===== */
 .meta {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 6px;
 }
 
+.meta small {
+    color: #72767d;
+    font-size: 12px;
+}
+
+.meta button {
+    background: none;
+    border: 1px solid #72767d;
+    color: #b9bbbe;
+    padding: 2px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.meta button:hover {
+    background-color: #5865f2;
+    border-color: #5865f2;
+    color: #fff;
+}
+
+/* ===== Formulaire d'envoi de message ===== */
 .new-message-form {
-	margin-top: 14px;
-	display: flex;
-	flex-direction: column;
-	gap: 8px;
+    display: flex;
+    gap: 8px;
 }
 
 .new-message-form textarea {
-	min-height: 90px;
+    flex: 1;
+    padding: 10px 12px;
+    background-color: #40444b;
+    border: none;
+    border-radius: 6px;
+    color: #dcddde;
+    font-size: 14px;
 }
 
-.about-page {
-	padding: 24px;
+.new-message-form button {
+    padding: 0 20px;
+    background-color: #5865f2;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
 }
-/* css demander a l ia pour le moment c est un css complet que je vais modifier totalment par la suite la c est pour juste gagne du temps */
+
+.new-message-form button:hover {
+    background-color: #4752c4;
+}
+
+/* ===== Page a propos ===== */
+.about-page {
+    padding: 30px;
+    max-width: 600px;
+}
+
+.about-page h1 {
+    color: #fff;
+    margin-bottom: 12px;
+}
+
+.about-page p {
+    line-height: 1.6;
+    color: #b9bbbe;
+}
+
+.about-page a {
+    color: #5865f2;
+    text-decoration: none;
+}
+
+.about-page a:hover {
+    text-decoration: underline;
+}
